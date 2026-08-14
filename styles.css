@@ -1635,6 +1635,152 @@ main [id] {
   color: var(--accent);
 }
 
+.email-options {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.email-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.email-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  min-width: 78px;
+  text-align: center;
+}
+
+.email-tag.business {
+  color: var(--accent);
+  border-color: rgba(124, 92, 255, 0.45);
+}
+
+.email-tag.support {
+  color: #3ddc97;
+  border-color: rgba(61, 220, 151, 0.4);
+}
+
+.email-tag.gmail {
+  color: #ea4335;
+  border-color: rgba(234, 67, 53, 0.45);
+}
+
+.email-option a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+  transition: color 0.2s, border-color 0.2s;
+  overflow-wrap: anywhere;
+}
+
+.email-option a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.phone-row {
+  display: flex;
+  gap: 10px;
+}
+
+.phone-code {
+  width: 150px;
+  flex-shrink: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 12px 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.phone-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.optional {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+/* Account login strip */
+.login-strip {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.login-strip-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.login-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.login-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(124, 92, 255, 0.18);
+}
+
+.login-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.login-google .login-logo {
+  background: conic-gradient(from -45deg, #ea4335 0 25%, #fbbc05 0 50%, #34a853 0 75%, #4285f4 0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.login-linux .login-logo {
+  font-size: 1.05rem;
+}
+
 /* Toast */
 .toast {
   position: fixed;
