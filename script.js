@@ -82,6 +82,14 @@
     });
   });
 
+  document.querySelectorAll(".login-btn").forEach(function (button) {
+    button.addEventListener("click", function () {
+      showToast(
+        button.getAttribute("data-provider") + " sign-in — coming soon"
+      );
+    });
+  });
+
   var form = document.getElementById("contact-form");
   var formStatus = document.getElementById("form-status");
 
