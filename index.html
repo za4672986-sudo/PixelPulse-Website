@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelPulse — Digital Products & Portfolio</title>
+  <meta name="description" content="PixelPulse crafts digital products, apps, and creative work. Explore our portfolio and get in touch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <span class="preloader-logo"><span class="logo-dot"></span> PixelPulse</span>
+      <div class="preloader-bar"><span id="preloader-fill"></span></div>
+      <span id="preloader-count" class="preloader-count">0</span>
+    </div>
+  </div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="#top" class="logo">
+        <span class="logo-dot"></span> PixelPulse
+      </a>
+      <ul class="nav-links">
+        <li><a href="studio.html">AI Studio</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#playground">Playground</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div id="hero-scene" class="hero-scene" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Generative AI Code Generator</p>
+          <h1>Turn your ideas into <span class="gradient-text">production-ready code</span> with AI.</h1>
+          <p class="hero-sub">Describe what you want to build and let AI generate, explain, debug, optimize, and improve your code — HTML to React, Python to Tailwind.</p>
+          <div class="hero-actions">
+            <a href="studio.html" class="btn btn-primary magnetic">⚡ Start Coding</a>
+            <a href="#playground" class="btn btn-ghost magnetic">Try AI Generator</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>9</strong><span>languages</span></div>
+            <div class="hero-stat"><strong>∞</strong><span>ideas</span></div>
+            <div class="hero-stat"><strong>AI</strong><span>powered</span></div>
+          </div>
+        </div>
+        <div class="hero-tech" aria-hidden="true">
+          <div class="tech-card">
+            <div class="tech-card-head">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="tech-title">pixelpulse — deploy.log</span>
+            </div>
+            <pre class="tech-body" id="tech-output"></pre>
+          </div>
+          <div class="tech-chip chip-latency">
+            <span class="chip-icon">⚡</span>
+            <div><strong>48ms</strong><small>edge latency</small></div>
+          </div>
+          <div class="tech-chip chip-uptime">
+            <span class="chip-icon">◉</span>
+            <div><strong>99.9%</strong><small>uptime</small></div>
+          </div>
+          <div class="tech-chip chip-api">
+            <span class="chip-icon">↗</span>
+            <div><strong>API v2</strong><small>graphql</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>One workspace. <span class="gradient-text">Every coding task.</span></h2>
+          <p>An AI coding IDE that writes, explains, debugs, optimizes, and improves your code.</p>
+        </div>
+        <div class="grid features-grid">
+          <article class="card feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Generate</h3>
+            <p>Describe your idea in plain language and get complete, production-quality code.</p>
+          </article>
+          <article class="card feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Conversation memory</h3>
+            <p>Keep building — "now add a pricing section" — and the AI updates the existing code.</p>
+          </article>
+          <article class="card feature-card">
+            <div class="feature-icon">🖥</div>
+            <h3>Live preview</h3>
+            <p>Render results instantly with desktop, tablet, and mobile preview modes.</p>
+          </article>
+          <article class="card feature-card">
+            <div class="feature-icon">🔧</div>
+            <h3>Fix & optimize</h3>
+            <p>Find errors, optimize performance, and improve code quality with one click.</p>
+          </article>
+          <article class="card feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Copy & download</h3>
+            <p>Grab your code with one click or download files ready to run locally.</p>
+          </article>
+          <article class="card feature-card">
+            <div class="feature-icon">🗂</div>
+            <h3>Projects & history</h3>
+            <p>Save projects, rename them, restore previous generations, and track your usage.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>From idea to code in three steps.</p>
+        </div>
+        <div class="how-grid">
+          <div class="how-step">
+            <span class="how-num">1</span>
+            <h3>Describe</h3>
+            <p>Tell the AI what you want to build in your own words and pick a language or framework.</p>
+          </div>
+          <div class="how-step">
+            <span class="how-num">2</span>
+            <h3>Generate</h3>
+            <p>The AI writes complete files into a syntax-highlighted editor while you watch it stream in.</p>
+          </div>
+          <div class="how-step">
+            <span class="how-num">3</span>
+            <h3>Refine & ship</h3>
+            <p>Preview, fix, optimize, and improve — then copy or download your code and ship it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tech" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Supported technologies</h2>
+          <p>Generate code in every major stack.</p>
+        </div>
+        <div class="tech-grid">
+          <div class="tech-item"><span class="tech-logo">⟨⟩</span>HTML</div>
+          <div class="tech-item"><span class="tech-logo">#</span>CSS</div>
+          <div class="tech-item"><span class="tech-logo">JS</span>JavaScript</div>
+          <div class="tech-item"><span class="tech-logo">TS</span>TypeScript</div>
+          <div class="tech-item"><span class="tech-logo">Py</span>Python</div>
+          <div class="tech-item"><span class="tech-logo">⚛</span>React</div>
+          <div class="tech-item"><span class="tech-logo">▲</span>Next.js</div>
+          <div class="tech-item"><span class="tech-logo">⦿</span>Node.js</div>
+          <div class="tech-item"><span class="tech-logo">~</span>Tailwind CSS</div>
+        </div>
+        <div class="cta-box">
+          <h2>Ready to build something amazing?</h2>
+          <p>Open the AI Studio and describe your first project — the code is one prompt away.</p>
+          <a href="studio.html" class="btn btn-primary btn-lg magnetic">Open AI Studio →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Design</span><b>✦</b><span>Code</span><b>✦</b><span>Motion</span><b>✦</b><span>Brand</span><b>✦</b><span>Product</span><b>✦</b>
+        <span>Design</span><b>✦</b><span>Code</span><b>✦</b><span>Motion</span><b>✦</b><span>Brand</span><b>✦</b><span>Product</span><b>✦</b>
+      </div>
+    </div>
+
+    <section id="playground" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Build & preview live</h2>
+          <p>Code on the left, watch your site render on the right — or tune it visually with the Visual tab.</p>
+        </div>
+        <div class="playground">
+          <div class="editor-panel">
+            <div class="editor-tabs">
+              <button class="editor-tab active" data-lang="html" type="button">HTML</button>
+              <button class="editor-tab" data-lang="css" type="button">CSS</button>
+              <button class="editor-tab" data-lang="js" type="button">JS</button>
+              <button class="editor-tab" data-lang="visual" type="button">Visual</button>
+            </div>
+            <div class="ai-bar">
+              <span class="ai-badge">✦ AI</span>
+              <input id="ai-prompt" class="ai-input" type="text" placeholder='Describe a website… e.g. "landing page for a coffee shop"'>
+              <button id="ai-generate" class="btn btn-primary btn-sm" type="button">Generate</button>
+              <button id="ai-settings-toggle" class="btn btn-ghost btn-sm" type="button" title="API key settings">⚙</button>
+            </div>
+            <div class="ai-settings" id="ai-settings" hidden>
+              <input id="ai-key" class="ai-key" type="password" placeholder="OpenAI API key (optional — unlocks higher-quality generation)">
+              <button id="ai-save-key" class="btn btn-ghost btn-sm" type="button">Save</button>
+              <span id="ai-mode" class="ai-mode">free AI mode — no key needed</span>
+            </div>
+            <div class="editor-toolbar">
+              <label class="auto-toggle" title="Update preview automatically while typing">
+                <input type="checkbox" id="auto-run" checked>
+                <span class="switch"></span>
+                <span>Auto</span>
+              </label>
+              <button id="btn-reset" class="btn btn-ghost btn-sm" type="button">Reset</button>
+              <button id="btn-run" class="btn btn-primary btn-sm" type="button">Run</button>
+            </div>
+            <p id="ai-status" class="ai-status" hidden></p>
+            <div class="editor-wrap">
+              <div class="editor-holder" id="editor-holder">
+                <textarea id="editor-html" class="editor-textarea" spellcheck="false" aria-label="HTML code"></textarea>
+                <textarea id="editor-css" class="editor-textarea" spellcheck="false" aria-label="CSS code"></textarea>
+                <textarea id="editor-js" class="editor-textarea" spellcheck="false" aria-label="JavaScript code"></textarea>
+              </div>
+              <div class="visual-controls" id="visual-controls" hidden>
+                <p class="visual-hint">Tweak the design and watch the code-driven preview update.</p>
+                <div class="vcontrol">
+                  <label for="v-bg">Background</label>
+                  <input type="color" id="v-bg" value="#f4f5fb">
+                </div>
+                <div class="vcontrol">
+                  <label for="v-text">Text color</label>
+                  <input type="color" id="v-text" value="#1a1d29">
+                </div>
+                <div class="vcontrol">
+                  <label for="v-accent">Accent color</label>
+                  <input type="color" id="v-accent" value="#7c5cff">
+                </div>
+                <div class="vcontrol vcontrol-range">
+                  <label for="v-fs">Font size <span id="v-fs-val">16px</span></label>
+                  <input type="range" id="v-fs" min="12" max="24" value="16">
+                </div>
+                <div class="vcontrol vcontrol-range">
+                  <label for="v-radius">Corner radius <span id="v-radius-val">12px</span></label>
+                  <input type="range" id="v-radius" min="0" max="24" value="12">
+                </div>
+                <div class="vcontrol vcontrol-range">
+                  <label for="v-gap">Card gap <span id="v-gap-val">24px</span></label>
+                  <input type="range" id="v-gap" min="0" max="48" value="24">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-panel">
+            <div class="preview-head">
+              <span class="preview-status" id="preview-status">● ready</span>
+              <div class="preview-head-actions">
+                <span class="preview-mode">Live preview</span>
+                <button id="btn-open" class="btn btn-ghost btn-sm" type="button" title="Open preview in a new tab">Open ↗</button>
+              </div>
+            </div>
+            <iframe id="preview" class="preview-frame" title="Live preview of your code"></iframe>
+            <div class="console" id="console" hidden></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Selected Work</h2>
+          <p>A snapshot of products and experiences we've shipped.</p>
+        </div>
+        <div class="grid work-grid" id="work-grid">
+          <article class="card work-card" data-tags="web">
+            <div class="card-visual gradient-a">Nova</div>
+            <div class="card-body">
+              <h3>Nova Analytics</h3>
+              <p>Real-time dashboard for product teams.</p>
+              <span class="tag">Web App</span>
+            </div>
+          </article>
+          <article class="card work-card" data-tags="mobile">
+            <div class="card-visual gradient-b">Pulse</div>
+            <div class="card-body">
+              <h3>PulseFit</h3>
+              <p>Health tracking that adapts to your routine.</p>
+              <span class="tag">Mobile App</span>
+            </div>
+          </article>
+          <article class="card work-card" data-tags="brand">
+            <div class="card-visual gradient-c">Ora</div>
+            <div class="card-body">
+              <h3>Ora Brand Kit</h3>
+              <p>Identity system and design tokens.</p>
+              <span class="tag">Branding</span>
+            </div>
+          </article>
+          <article class="card work-card" data-tags="web">
+            <div class="card-visual gradient-d">Drift</div>
+            <div class="card-body">
+              <h3>Drift Store</h3>
+              <p>Headless e-commerce with edge-fast checkout.</p>
+              <span class="tag">Web App</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="products" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Digital Products</h2>
+          <p>Downloadable tools and resources crafted by the studio.</p>
+        </div>
+        <div class="grid products-grid" id="products-grid">
+          <article class="card product-card">
+            <div class="product-icon">⌘</div>
+            <h3>UI Kit — 320 Components</h3>
+            <p>Production-ready components for Figma.</p>
+            <div class="product-foot">
+              <span class="price">$49</span>
+              <button class="btn btn-primary btn-sm" data-product="UI Kit — 320 Components">Add to cart</button>
+            </div>
+          </article>
+          <article class="card product-card">
+            <div class="product-icon">✦</div>
+            <h3>Design System Starter</h3>
+            <p>Tokens, grids, and guidelines to launch fast.</p>
+            <div class="product-foot">
+              <span class="price">$29</span>
+              <button class="btn btn-primary btn-sm" data-product="Design System Starter">Add to cart</button>
+            </div>
+          </article>
+          <article class="card product-card">
+            <div class="product-icon">◉</div>
+            <h3>React Template Pack</h3>
+            <p>Polished, responsive templates for developers.</p>
+            <div class="product-foot">
+              <span class="price">$39</span>
+              <button class="btn btn-primary btn-sm" data-product="React Template Pack">Add to cart</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>What clients say</h2>
+          <p>Kind words from teams we've shipped with.</p>
+        </div>
+        <div class="testimonials">
+          <figure class="quote">
+            <blockquote>"PixelPulse shipped our product in half the time we expected — and it looks incredible."</blockquote>
+            <figcaption><strong>Maya Chen</strong><span>Founder, Nova Analytics</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"The most senior-feeling studio we've worked with. Every interaction felt considered."</blockquote>
+            <figcaption><strong>Jonas Weber</strong><span>CTO, Drift Store</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"They don't just design — they obsess over the details that make products feel premium."</blockquote>
+            <figcaption><strong>Amara Osei</strong><span>Product Lead, PulseFit</span></figcaption>
+          </figure>
+          <div class="quote-dots">
+            <button class="q-dot q-dot-active" data-q="0" type="button" aria-label="Quote 1"></button>
+            <button class="q-dot" data-q="1" type="button" aria-label="Quote 2"></button>
+            <button class="q-dot" data-q="2" type="button" aria-label="Quote 3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container about-inner">
+        <div class="section-head">
+          <h2>About PixelPulse</h2>
+        </div>
+        <div class="about-grid">
+          <div>
+            <p>PixelPulse is a small, senior team obsessed with craft. We partner with startups and teams to design, build, and launch digital products that move the needle.</p>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="stat-num" data-count="120">0</span><span class="stat-label">Projects shipped</span></div>
+            <div class="stat"><span class="stat-num" data-count="18">0</span><span class="stat-label">Team members</span></div>
+            <div class="stat"><span class="stat-num" data-count="9">0</span><span class="stat-label">Years in business</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-alt contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <p class="eyebrow">Contact</p>
+            <h2 class="contact-title">Let's build something <span class="gradient-text">great together.</span></h2>
+            <p class="contact-sub">Have a product idea, a project, or just want to say hi? We usually reply within 24 hours.</p>
+            <a class="contact-email" href="mailto:hello@pixelpulse.app">hello@pixelpulse.app</a>
+            <div class="contact-status">
+              <span class="status-dot"></span>
+              Available for new projects
+            </div>
+            <div class="contact-socials">
+              <a class="social-pill" href="#">X <span class="social-arrow">↗</span></a>
+              <a class="social-pill" href="#">GitHub <span class="social-arrow">↗</span></a>
+              <a class="social-pill" href="#">LinkedIn <span class="social-arrow">↗</span></a>
+              <a class="social-pill" href="#">Dribbble <span class="social-arrow">↗</span></a>
+            </div>
+          </div>
+          <form id="contact-form" class="contact-form contact-card" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-send">Send message <span class="send-arrow">→</span></button>
+            <p id="form-status" class="form-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="cart-toast" class="toast" hidden>Added to cart</div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <a href="#top" class="logo">
+          <span class="logo-dot"></span> PixelPulse
+        </a>
+        <button id="back-top" class="btn btn-ghost btn-sm" type="button">Back to top ↑</button>
+      </div>
+      <div class="footer-mid">
+        <nav class="footer-nav">
+          <a href="#playground">Playground</a>
+          <a href="#work">Work</a>
+          <a href="#products">Products</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <p class="footer-tag">Design ✦ Code ✦ Motion</p>
+      </div>
+      <p class="footer-copy">© 2026 PixelPulse. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="grid-background.js?v=2"></script>
+  <script src="script.js?v=2"></script>
+  <script src="playground.js?v=2"></script>
+  <script src="playground-ai.js?v=2"></script>
+  <script src="transitions.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Studio — PixelPulse Code Generator</title>
+  <meta name="description" content="Describe what you want to build and let AI generate, explain, debug, optimize, and improve your code.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body class="studio">
+  <div id="app" class="studio-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a href="index.html" class="logo">
+          <span class="logo-dot"></span> PixelPulse
+        </a>
+        <button id="sidebar-close" class="icon-btn" aria-label="Close sidebar">✕</button>
+      </div>
+
+      <button id="btn-new-chat" class="btn btn-primary btn-block" type="button">＋ New Chat</button>
+
+      <div class="sidebar-search">
+        <input id="project-search" type="search" placeholder="Search projects…" autocomplete="off">
+      </div>
+
+      <nav class="sidebar-section">
+        <h3>Projects</h3>
+        <ul id="project-list" class="side-list"></ul>
+      </nav>
+
+      <nav class="sidebar-section">
+        <h3>History</h3>
+        <ul id="history-list" class="side-list"></ul>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="usage-card">
+          <span>Generations</span>
+          <strong id="usage-count">0</strong>
+        </div>
+        <a href="index.html" class="sidebar-link">← Back to website</a>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+    <main class="main">
+      <header class="studio-topbar">
+        <button id="sidebar-toggle" class="icon-btn" aria-label="Toggle sidebar">☰</button>
+        <input id="project-name" class="project-name" value="Untitled project" maxlength="60" spellcheck="false" aria-label="Project name">
+        <div class="topbar-actions">
+          <span id="provider-badge" class="provider-badge">detecting AI…</span>
+          <button id="btn-save" class="btn btn-ghost btn-sm" type="button">Save</button>
+        </div>
+      </header>
+
+      <div class="workspace" id="workspace">
+
+        <section class="panel chat-panel" id="chat-panel">
+          <div class="panel-head">
+            <span class="panel-title">Conversation</span>
+            <button id="btn-clear-chat" class="icon-btn" type="button" title="Clear chat">🗑</button>
+          </div>
+
+          <div class="chat-log" id="chat-log">
+            <div class="chat-bubble assistant">
+              <div class="bubble-label">✦ Assistant</div>
+              <p>Describe what you want to build and I'll generate the code. You can follow up with requests like <em>"now add a pricing section"</em> and I'll keep the conversation context.</p>
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <div class="chat-controls">
+              <select id="language-select" aria-label="Language / framework">
+                <option value="html" selected>HTML</option>
+                <option value="css">CSS</option>
+                <option value="js">JavaScript</option>
+                <option value="ts">TypeScript</option>
+                <option value="python">Python</option>
+                <option value="react">React</option>
+                <option value="next">Next.js</option>
+                <option value="node">Node.js</option>
+                <option value="tailwind">Tailwind CSS</option>
+              </select>
+              <select id="model-select" aria-label="AI provider">
+                <option value="auto" selected>Auto (best available)</option>
+                <option value="free">Free AI</option>
+                <option value="openai">OpenAI (needs key)</option>
+              </select>
+            </div>
+            <textarea id="chat-input" rows="3" placeholder='e.g. "Create a responsive React login page with dark mode."' autocomplete="off"></textarea>
+            <div class="chat-actions">
+              <span id="chat-hint" class="chat-hint">Enter to send · Shift+Enter for newline</span>
+              <button id="btn-generate" class="btn btn-primary" type="button">⚡ Generate</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel code-panel" id="code-panel">
+          <div class="code-tabs">
+            <button class="code-tab active" data-view="code" type="button">Code</button>
+            <button class="code-tab" data-view="preview" type="button">Preview</button>
+          </div>
+
+          <div class="editor-toolbar">
+            <div class="file-tabs" id="file-tabs"></div>
+            <div class="editor-actions">
+              <button id="btn-copy" class="btn btn-ghost btn-sm" type="button" title="Copy code">Copy</button>
+              <button id="btn-download" class="btn btn-ghost btn-sm" type="button" title="Download code">Download</button>
+              <button id="btn-regenerate" class="btn btn-ghost btn-sm" type="button" title="Regenerate with the same prompt">Regenerate</button>
+              <button id="btn-improve" class="btn btn-ghost btn-sm" type="button" title="Improve the code">Improve</button>
+              <button id="btn-explain" class="btn btn-ghost btn-sm" type="button" title="Explain the code">Explain</button>
+              <button id="btn-fix" class="btn btn-ghost btn-sm" type="button" title="Find and fix errors">Fix</button>
+              <button id="btn-optimize" class="btn btn-ghost btn-sm" type="button" title="Optimize performance">Optimize</button>
+            </div>
+          </div>
+
+          <div class="editor-body">
+            <div class="editor-area" id="editor-area">
+              <div class="stream-overlay" id="stream-overlay" hidden>
+                <div class="stream-spinner"></div>
+                <span id="stream-label">Generating…</span>
+              </div>
+              <textarea id="code-editor" spellcheck="false" aria-label="Generated code editor"></textarea>
+            </div>
+
+            <div class="preview-area" id="preview-area" hidden>
+              <div class="preview-toolbar">
+                <div class="device-toggle" id="device-toggle">
+                  <button class="active" data-device="desktop" type="button" title="Desktop">🖥</button>
+                  <button data-device="tablet" type="button" title="Tablet">📐</button>
+                  <button data-device="mobile" type="button" title="Mobile">📱</button>
+                </div>
+                <div class="preview-actions">
+                  <button id="btn-refresh" class="btn btn-ghost btn-sm" type="button">↻ Refresh</button>
+                  <button id="btn-open-tab" class="btn btn-ghost btn-sm" type="button">↗ Open</button>
+                  <button id="btn-fullscreen" class="btn btn-ghost btn-sm" type="button">⛶ Fullscreen</button>
+                </div>
+              </div>
+              <div class="device-frame desktop" id="device-frame">
+                <iframe id="studio-preview" class="studio-preview-frame" title="Live preview of generated code"></iframe>
+              </div>
+              <div class="preview-note" id="preview-note" hidden></div>
+            </div>
+          </div>
+
+          <div class="status-bar" id="status-bar">
+            <span class="status-dot"></span>
+            <span id="status-text">Ready</span>
+          </div>
+        </section>
+      </div>
+
+      <nav class="mobile-tabs">
+        <button class="active" data-view="chat" type="button">Prompt</button>
+        <button data-view="code" type="button">Code</button>
+        <button data-view="preview" type="button">Preview</button>
+      </nav>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/jsx/jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+  <script src="studio.js"></script>
+</body>
+</html>
