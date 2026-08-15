@@ -64,6 +64,7 @@
   };
 
   var editors = { html: null, css: null, js: null };
+  var editorWraps = { html: null, css: null, js: null };
   var currentLang = "html";
 
   var visualState = {
@@ -90,21 +91,37 @@
   }
 
   function getValue(lang) {
-    return editors[lang] ? editors[lang].getValue() : tas[lang].value;
+    if (editors[lang]) return editors[lang].getValue();
+    return tas[lang] ? tas[lang].value : "";
   }
 
   function setValue(lang, value) {
     if (editors[lang]) {
       editors[lang].setValue(value);
-    } else {
+    } else if (tas[lang]) {
       tas[lang].value = value;
     }
+  }
+
+  /* Only the active editor may be visible — with CodeMirror every instance
+     is absolutely positioned inside #editor-holder, so the others must be
+     explicitly hidden or the tabs appear dead. */
+  function showEditor(lang) {
+    ["html", "css", "js"].forEach(function (l) {
+      var wrap = editorWraps[l];
+      if (wrap) {
+        wrap.style.display = l === lang ? "" : "none";
+      } else if (tas[l]) {
+        tas[l].style.display = l === lang ? "block" : "none";
+      }
+    });
   }
 
   function initEditors() {
     if (!window.CodeMirror) return;
     var modes = { html: "xml", css: "css", js: "javascript" };
     ["html", "css", "js"].forEach(function (lang) {
+      if (!tas[lang]) return;
       var cm = CodeMirror.fromTextArea(tas[lang], {
         mode: modes[lang],
         theme: "dracula",
@@ -121,13 +138,16 @@
         schedulePreview();
       });
       editors[lang] = cm;
+      editorWraps[lang] = cm.getWrapperElement();
       tas[lang].style.display = "none";
     });
+    showEditor("html");
   }
 
   function initFallbackEditors() {
     if (window.CodeMirror) return;
     ["html", "css", "js"].forEach(function (lang) {
+      if (!tas[lang]) return;
       tas[lang].value = code[lang];
       tas[lang].addEventListener("input", function () {
         code[lang] = tas[lang].value;
@@ -141,18 +161,14 @@
     tabs.forEach(function (t) {
       t.classList.toggle("active", t.getAttribute("data-lang") === lang);
     });
-    holder.hidden = lang === "visual";
-    visual.hidden = lang !== "visual";
-    if (!window.CodeMirror && lang !== "visual") {
-      Object.keys(tas).forEach(function (l) {
-        tas[l].style.display = l === lang ? "block" : "none";
-      });
-    }
+    if (holder) holder.hidden = lang === "visual";
+    if (visual) visual.hidden = lang !== "visual";
+    if (lang !== "visual") showEditor(lang);
   }
 
   function schedulePreview() {
-    if (!autoRun.checked) {
-      statusEl.classList.add("stale");
+    if (autoRun && !autoRun.checked) {
+      if (statusEl) statusEl.classList.add("stale");
       return;
     }
     clearTimeout(previewTimer);
@@ -177,10 +193,13 @@
   }
 
   function updatePreview() {
+    if (!iframe) return;
     iframe.srcdoc = buildDocument();
-    statusEl.textContent = "● updated";
-    statusEl.classList.remove("stale");
-    consoleEl.hidden = true;
+    if (statusEl) {
+      statusEl.textContent = "● updated";
+      statusEl.classList.remove("stale");
+    }
+    if (consoleEl) consoleEl.hidden = true;
   }
 
   function resetCode() {
@@ -190,6 +209,7 @@
     ["html", "css", "js"].forEach(function (lang) {
       setValue(lang, code[lang]);
     });
+    showEditor(currentLang);
     updatePreview();
   }
 
@@ -243,8 +263,10 @@
 
   window.addEventListener("message", function (event) {
     if (event.data && event.data.type === "pp-error") {
-      consoleEl.textContent = "⚠ " + event.data.message;
-      consoleEl.hidden = false;
+      if (consoleEl) {
+        consoleEl.textContent = "⚠ " + event.data.message;
+        consoleEl.hidden = false;
+      }
     }
   });
 
