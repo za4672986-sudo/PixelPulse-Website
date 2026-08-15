@@ -596,4 +596,151 @@
       });
     }
   }
+
+  /* ------------------------------------------------------------------
+     Specialty phones — three devices present one after another
+     ------------------------------------------------------------------ */
+  var phonesSection = document.getElementById("phones");
+  var phoneCards = Array.prototype.slice.call(
+    document.querySelectorAll(".phone-card")
+  );
+  var voiceToggle = document.getElementById("voice-toggle");
+  var voiceStatus = document.getElementById("voice-status");
+
+  var soundOn = true;
+  var presentationRunning = false;
+  var presentationTimer = null;
+
+  function isVoiceSupported() {
+    return "speechSynthesis" in window;
+  }
+
+  function pickVoice() {
+    if (!isVoiceSupported()) return null;
+    var voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return null;
+    var preferred = [
+      "Google US English",
+      "Samantha",
+      "Microsoft Aria",
+      "Daniel",
+      "Microsoft Zira",
+      "Google UK English Female",
+      "Microsoft Guy"
+    ];
+    for (var i = 0; i < preferred.length; i++) {
+      for (var j = 0; j < voices.length; j++) {
+        if (voices[j].name.indexOf(preferred[i]) !== -1) return voices[j];
+      }
+    }
+    for (var k = 0; k < voices.length; k++) {
+      if (voices[k].lang && voices[k].lang.indexOf("en") === 0) return voices[k];
+    }
+    return voices[0];
+  }
+
+  function speak(text, onEnd) {
+    if (!isVoiceSupported() || !soundOn) {
+      if (onEnd) onEnd();
+      return;
+    }
+    window.speechSynthesis.cancel();
+    var utterance = new SpeechSynthesisUtterance(text);
+    var voice = pickVoice();
+    if (voice) {
+      utterance.voice = voice;
+      utterance.rate = 0.98;
+      utterance.pitch = 1;
+    }
+    utterance.onend = onEnd || null;
+    utterance.onerror = onEnd || null;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function estimateSpeechMs(text) {
+    /* ~155 words/min, professional narration pace */
+    var words = text.trim().split(/\s+/).length;
+    return Math.max(2200, Math.round((words / 155) * 60000) + 900);
+  }
+
+  function setSpeaking(index) {
+    phoneCards.forEach(function (card, i) {
+      card.classList.toggle("is-speaking", i === index);
+    });
+  }
+
+  function runPresentation() {
+    if (presentationRunning || !phoneCards.length) return;
+    presentationRunning = true;
+
+    var idx = 0;
+    var step = function () {
+      if (idx >= phoneCards.length) {
+        setSpeaking(-1);
+        if (voiceStatus) voiceStatus.textContent = "";
+        presentationRunning = false;
+        return;
+      }
+      var card = phoneCards[idx];
+      setSpeaking(idx);
+      var text = card.getAttribute("data-voice") || "";
+      if (voiceStatus) voiceStatus.textContent = card.getAttribute("data-specialty") + " — speaking";
+      speak(text);
+      idx++;
+      presentationTimer = window.setTimeout(step, estimateSpeechMs(text));
+    };
+
+    window.setTimeout(step, 600);
+  }
+
+  if (phonesSection && phoneCards.length) {
+    var phoneObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            runPresentation();
+            phoneObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    phoneObserver.observe(phonesSection);
+  }
+
+  if (voiceToggle) {
+    voiceToggle.addEventListener("click", function () {
+      soundOn = !soundOn;
+      voiceToggle.setAttribute("aria-pressed", soundOn ? "true" : "false");
+      voiceToggle.textContent = soundOn ? "🔊 Sound on" : "🔇 Sound off";
+      if (!soundOn && isVoiceSupported()) {
+        window.speechSynthesis.cancel();
+      }
+    });
+  }
+
+  if (isVoiceSupported()) {
+    window.speechSynthesis.onvoiceschanged = function () {
+      /* Cache available voices on load */
+      window.speechSynthesis.getVoices();
+    };
+  }
+
+  /* Click a phone → open its separate quality page */
+  phoneCards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      var specialty = card.getAttribute("data-specialty");
+      if (!specialty) return;
+      window.location.href = "qualities.html?specialty=" + encodeURIComponent(specialty);
+    });
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        var specialty = card.getAttribute("data-specialty");
+        if (specialty) {
+          window.location.href = "qualities.html?specialty=" + encodeURIComponent(specialty);
+        }
+      }
+    });
+  });
 })();
