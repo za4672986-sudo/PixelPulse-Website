@@ -3444,3 +3444,13 @@ body.cursor-hover .cursor-ring {
     transition: none !important;
   }
 }
+.logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(124, 92, 255, 0.35));
+}
+
+.preloader-logo .logo-img {
+  height: 52px;
+}
