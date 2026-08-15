@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Qualities — PixelPulse</title>
+  <meta name="description" content="PixelPulse — the qualities behind every specialty: what you can expect when you work with us.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --bg-alt: #12151d;
+      --surface: #171b24;
+      --border: #262c39;
+      --text: #e8eaf0;
+      --muted: #9aa3b2;
+      --accent: #7c5cff;
+      --pink: #ff5c8a;
+      --gradient: linear-gradient(135deg, #7c5cff, #ff5c8a);
+      --radius: 14px;
+      --radius-xl: 24px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --font-display: "Space Grotesk", sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 13, 18, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gradient);
+      box-shadow: 0 0 12px rgba(124, 92, 255, 0.8);
+    }
+
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    .hero {
+      padding: 72px 0 56px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(124, 92, 255, 0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      text-wrap: balance;
+      margin-bottom: 16px;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(124, 92, 255, 0.35);
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 28px;
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 12px 22px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(124, 92, 255, 0.5); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: #fff; }
+
+    .speaker-note {
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      min-height: 1.2em;
+    }
+
+    .section {
+      padding: 56px 0;
+    }
+
+    .section-alt {
+      background: var(--bg-alt);
+      border-block: 1px solid var(--border);
+    }
+
+    .section-head {
+      margin-bottom: 40px;
+      max-width: 720px;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+
+    .section-head p { color: var(--muted); }
+
+    .qualities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .quality-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 26px 24px;
+      transition: transform 0.45s var(--ease-out), border-color 0.3s, box-shadow 0.45s var(--ease-out);
+    }
+
+    .quality-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 92, 255, 0.5);
+      box-shadow: var(--shadow);
+    }
+
+    .quality-num {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      background: var(--gradient);
+      margin-bottom: 16px;
+      box-shadow: 0 6px 18px rgba(124, 92, 255, 0.4);
+    }
+
+    .quality-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .quality-card p { color: var(--muted); font-size: 0.92rem; }
+
+    .other-section .other-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .other-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: border-color 0.3s, transform 0.3s var(--ease-out);
+    }
+
+    .other-card:hover { border-color: rgba(124, 92, 255, 0.5); transform: translateY(-2px); }
+
+    .other-card span:last-child { color: var(--accent); }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 52px 0 40px; }
+      .qualities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="logo"><span class="logo-dot"></span> PixelPulse</a>
+      <a href="index.html#phones" class="back-link">← Back to the phones</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow" id="q-kicker">Our qualities</p>
+        <h1><span class="gradient-text" id="q-title">AI Website Development</span></h1>
+        <p class="hero-sub" id="q-sub">Production-ready websites built with AI acceleration — launched in days, not months.</p>
+        <div class="hero-actions">
+          <button id="speak-btn" class="btn btn-primary" type="button">🔊 Hear our intro</button>
+          <a href="index.html#contact" class="btn btn-ghost">Start a project →</a>
+        </div>
+        <p id="speaker-note" class="speaker-note" role="status"></p>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>The qualities we <span class="gradient-text">bring to you</span></h2>
+          <p>What "working with us" means in practice — the standards we hold for every engagement.</p>
+        </div>
+        <div class="qualities-grid" id="qualities-grid"></div>
+      </div>
+    </section>
+
+    <section class="section other-section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Explore another specialty</h2>
+          <p>Each device in our studio has its own quality promise.</p>
+        </div>
+        <div class="other-links" id="other-links"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 PixelPulse. All rights reserved.</div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var DATA = {
+        "ai-web": {
+          kicker: "AI Website Development",
+          title: "AI Website Development",
+          sub: "Production-ready websites built with AI acceleration — launched in days, not months.",
+          intro: "Hi, I'm the AI engine at PixelPulse. I build production-ready websites with AI acceleration, launched in days, not months. Custom design, not templates. SEO and performance baked in from day one.",
+          qualities: [
+            ["Speed without shortcuts", "AI acceleration turns a brief into a live, polished site in days — while senior craft review keeps the quality high."],
+            ["Custom, never templated", "Every layout and interaction is designed around your brand and audience, not picked from a library."],
+            ["SEO & performance baked in", "Core Web Vitals, semantic markup, and edge delivery come as standard — not as an afterthought."],
+            ["Clean, maintainable code", "A readable, documented codebase your team can extend long after launch."],
+            ["Transparent by default", "Clear scoping, honest timelines, and a codebase you own outright from day one."]
+          ]
+        },
+        "web-dev": {
+          kicker: "Web Design & Development",
+          title: "Web Design & Development",
+          sub: "Hand-crafted, fast, and accessible websites engineered to convert.",
+          intro: "I'm the web studio at PixelPulse. I craft hand-crafted, accessible websites engineered to convert — fast, responsive, and effortless for your team to manage.",
+          qualities: [
+            ["Hand-crafted & accessible", "Semantic HTML, keyboard-first navigation, and WCAG-aware design in every build."],
+            ["Engineered to convert", "Clear hierarchy, purposeful motion, and copy-driven layouts that turn visitors into customers."],
+            ["Fast & responsive", "Optimized assets and fluid layouts across every screen, from phones to 4K displays."],
+            ["Easy to manage", "A CMS your team can update in minutes — no developer required for day-to-day edits."],
+            ["Support after launch", "Hosting, monitoring, and ongoing improvements included, not billed again."]
+          ]
+        },
+        "ai-auto": {
+          kicker: "AI Automation",
+          title: "AI Automation",
+          sub: "Replace repetitive work with AI workflows that run your operations on autopilot.",
+          intro: "I'm the automation brain at PixelPulse. I replace repetitive work with AI workflows that run your operations on autopilot — support, data, and admin handled around the clock.",
+          qualities: [
+            ["Runs 24/7 on autopilot", "AI agents handle support, data entry, and reporting around the clock, so your team sleeps at night."],
+            ["Human-in-the-loop", "Approval gates and escalation paths keep a person in control of the important decisions."],
+            ["Integrates with your stack", "CRM, databases, and webhooks connect in days — no rip-and-replace migration."],
+            ["Measurable hours saved", "Every workflow reports the hours and cost it saves, so the ROI is never a guess."],
+            ["Secure & compliant", "Scoped permissions, audit logs, and private data handling baked into every flow."]
+          ]
+        }
+      };
+
+      var params = new URLSearchParams(window.location.search);
+      var specialty = params.get("specialty") || "ai-web";
+      var data = DATA[specialty] || DATA["ai-web"];
+      var soundOn = true;
+
+      document.getElementById("q-kicker").textContent = data.kicker + " — our qualities";
+      document.getElementById("q-title").textContent = data.title;
+      document.getElementById("q-sub").textContent = data.sub;
+
+      var grid = document.getElementById("qualities-grid");
+      grid.innerHTML = "";
+      data.qualities.forEach(function (q, i) {
+        var card = document.createElement("article");
+        card.className = "quality-card";
+        var num = document.createElement("span");
+        num.className = "quality-num";
+        num.textContent = String(i + 1).padStart(2, "0");
+        var h3 = document.createElement("h3");
+        h3.textContent = q[0];
+        var p = document.createElement("p");
+        p.textContent = q[1];
+        card.appendChild(num);
+        card.appendChild(h3);
+        card.appendChild(p);
+        grid.appendChild(card);
+      });
+
+      var otherBox = document.getElementById("other-links");
+      otherBox.innerHTML = "";
+      Object.keys(DATA).forEach(function (key) {
+        if (key === specialty) return;
+        var item = DATA[key];
+        var a = document.createElement("a");
+        a.className = "other-card";
+        a.href = "qualities.html?specialty=" + encodeURIComponent(key);
+        var label = document.createElement("span");
+        label.textContent = item.title;
+        var arrow = document.createElement("span");
+        arrow.textContent = "→";
+        a.appendChild(label);
+        a.appendChild(arrow);
+        otherBox.appendChild(a);
+      });
+
+      function pickVoice() {
+        if (!("speechSynthesis" in window)) return null;
+        var voices = window.speechSynthesis.getVoices();
+        if (!voices.length) return null;
+        var preferred = [
+          "Google US English",
+          "Samantha",
+          "Microsoft Aria",
+          "Daniel",
+          "Microsoft Zira",
+          "Google UK English Female",
+          "Microsoft Guy"
+        ];
+        for (var i = 0; i < preferred.length; i++) {
+          for (var j = 0; j < voices.length; j++) {
+            if (voices[j].name.indexOf(preferred[i]) !== -1) return voices[j];
+          }
+        }
+        for (var k = 0; k < voices.length; k++) {
+          if (voices[k].lang && voices[k].lang.indexOf("en") === 0) return voices[k];
+        }
+        return voices[0];
+      }
+
+      var speakBtn = document.getElementById("speak-btn");
+      var note = document.getElementById("speaker-note");
+
+      function speak() {
+        if (!("speechSynthesis" in window)) {
+          note.textContent = "Voice narration isn't supported in this browser.";
+          return;
+        }
+        if (!soundOn) {
+          note.textContent = "Sound is off — enable it to hear our intro.";
+          return;
+        }
+        window.speechSynthesis.cancel();
+        var utterance = new SpeechSynthesisUtterance(data.intro);
+        var voice = pickVoice();
+        if (voice) {
+          utterance.voice = voice;
+          utterance.rate = 0.98;
+          utterance.pitch = 1;
+        }
+        utterance.onend = function () { note.textContent = ""; };
+        note.textContent = "Speaking…";
+        window.speechSynthesis.speak(utterance);
+      }
+
+      if (speakBtn) {
+        speakBtn.addEventListener("click", speak);
+      }
+
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged = function () {
+          window.speechSynthesis.getVoices();
+        };
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          window.location.href = "index.html#phones";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
