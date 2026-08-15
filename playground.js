@@ -219,4 +219,61 @@
       window.open(url, "_blank");
       setTimeout(function () {
         URL.revokeObjectURL(url);
-      }, 30000
+      }, 30000);
+    });
+  }
+
+  window.Playground = {
+    getCode: function () {
+      return { html: code.html, css: code.css, js: code.js };
+    },
+    setCode: function (obj) {
+      if (obj && typeof obj === "object") {
+        if (typeof obj.html === "string") code.html = obj.html;
+        if (typeof obj.css === "string") code.css = obj.css;
+        if (typeof obj.js === "string") code.js = obj.js;
+        ["html", "css", "js"].forEach(function (lang) {
+          setValue(lang, code[lang]);
+        });
+        updatePreview();
+      }
+    },
+    refresh: updatePreview
+  };
+
+  window.addEventListener("message", function (event) {
+    if (event.data && event.data.type === "pp-error") {
+      consoleEl.textContent = "⚠ " + event.data.message;
+      consoleEl.hidden = false;
+    }
+  });
+
+  function bindVisualControl(id, key, kind, suffix) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var labelEl = document.getElementById(id + "-val");
+
+    var apply = function () {
+      if (kind === "range") {
+        visualState[key] = parseInt(el.value, 10) || 0;
+        if (labelEl) labelEl.textContent = visualState[key] + (suffix || "");
+      } else {
+        visualState[key] = el.value;
+      }
+      schedulePreview();
+    };
+
+    el.addEventListener("input", apply);
+  }
+
+  bindVisualControl("v-bg", "bg", "color");
+  bindVisualControl("v-text", "text", "color");
+  bindVisualControl("v-accent", "accent", "color");
+  bindVisualControl("v-fs", "fs", "range", "px");
+  bindVisualControl("v-radius", "radius", "range", "px");
+  bindVisualControl("v-gap", "gap", "range", "px");
+
+  initEditors();
+  initFallbackEditors();
+  updatePreview();
+})();
