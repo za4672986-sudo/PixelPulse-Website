@@ -85,6 +85,7 @@
       ".nav nav{display:flex;gap:16px;align-items:center}",
       ".nav a{color:var(--text);text-decoration:none}",
       ".btn{background:var(--accent);color:#fff;border-radius:var(--radius);padding:10px 18px;text-decoration:none;display:inline-block}",
+      ".btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.3)}",
       ".hero{text-align:center;padding:80px 24px 60px}",
       ".hero h1{font-size:2.6rem;margin-bottom:10px}",
       ".accent{color:var(--accent)}",
