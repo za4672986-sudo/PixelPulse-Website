@@ -726,19 +726,57 @@
     };
   }
 
-  /* Click a phone → open its separate quality page */
+  /* Click a phone → open its separate quality page (with 404 fallback) */
+  var SPECIALTY_NAMES = {
+    "ai-web": "AI Website Development",
+    "web-dev": "Web Design & Development",
+    "ai-auto": "AI Automation"
+  };
+
+  function showMissingQualityPage(specialty) {
+    var name = SPECIALTY_NAMES[specialty] || "specialty";
+    alert(
+      "The " + name + " quality page (qualities.html) could not be found.\n\n" +
+      "Please keep qualities.html in the same folder as this page — " +
+      "or re-download PixelPulse-Website.zip which contains all 8 files."
+    );
+  }
+
+  function openQualityPage(specialty) {
+    var url = "qualities.html?specialty=" + encodeURIComponent(specialty);
+    var go = function () {
+      window.location.href = url;
+    };
+    /* fetch() only works over http(s); on file:// just navigate directly */
+    if (!/^https?:$/.test(window.location.protocol)) {
+      go();
+      return;
+    }
+    fetch("qualities.html", { method: "HEAD", cache: "no-store" })
+      .then(function (res) {
+        if (res.ok) {
+          go();
+        } else {
+          showMissingQualityPage(specialty);
+        }
+      })
+      .catch(function () {
+        showMissingQualityPage(specialty);
+      });
+  }
+
   phoneCards.forEach(function (card) {
     card.addEventListener("click", function () {
       var specialty = card.getAttribute("data-specialty");
       if (!specialty) return;
-      window.location.href = "qualities.html?specialty=" + encodeURIComponent(specialty);
+      openQualityPage(specialty);
     });
     card.addEventListener("keydown", function (e) {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         var specialty = card.getAttribute("data-specialty");
         if (specialty) {
-          window.location.href = "qualities.html?specialty=" + encodeURIComponent(specialty);
+          openQualityPage(specialty);
         }
       }
     });
